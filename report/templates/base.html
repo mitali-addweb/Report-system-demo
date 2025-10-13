@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Dashboard{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="{% url 'dashboard' %}" class="logo">MDI Dashboard</a>
+        </div>
+        <div class="nav-right">
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'report:display_report' %}">Reports</a>
+            <a href="{% url 'report:display_assets' %}">Assets</a>
+            <a href="{% url 'report:display_problem_type' %}">Problem Types</a>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    {% block content %}{% endblock %}
+
+    {% block script %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,111 @@
+/* -------------------- Report Container -------------------- */
+.report-container {
+    background-color: #fff;
+    max-width: 850px;
+    margin: 20px auto auto auto;
+    padding: 40px 35px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+/* -------------------- Heading -------------------- */
+.report-container h1 {
+    text-align: center;
+    font-size: 34px;
+    font-weight: 700;
+    color: #6c63ff;
+    margin-bottom: 35px;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 10px;
+}
+
+/* -------------------- Report Fields -------------------- */
+.report-container .field {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    transition: background 0.3s;
+}
+
+.report-container .field:nth-child(even) {
+    background-color: #f0f0f0;
+}
+
+.report-container .field strong {
+    color: #555;
+    font-weight: 600;
+    margin-right: 15px;
+}
+
+.report-container .field span {
+    color: #333;
+    font-weight: 500;
+}
+
+/* -------------------- Previous Entry -------------------- */
+.report-container .previous-entry a {
+    color: #6c63ff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.report-container .previous-entry a:hover {
+    color: #574fd6;
+}
+
+/* -------------------- Buttons & Links -------------------- */
+.no-print {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+}
+
+.no-print a,
+.no-print button {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 8px;
+    background-color: #6c63ff;
+    color: #fff;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.no-print a:hover,
+.no-print button:hover {
+    background-color: #574fd6;
+}
+
+/* -------------------- Print Settings -------------------- */
+@media print {
+    .no-print {
+        display: none;
+    }
+
+    body {
+        padding: 0;
+        background-color: #fff;
+    }
+
+    .report-container {
+        box-shadow: none;
+        border-radius: 0;
+        padding: 20px;
+    }
+}
+
+/* -------------------- Responsive -------------------- */
+@media (max-width: 768px) {
+    .report-container .field {
+        flex-direction: column;
+        gap: 4px;
+    }
+}
+

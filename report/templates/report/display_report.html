@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Display Reports{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/display.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1>Reports List</h1>
+<a href="{% url 'dashboard' %}" class="btn-create">Dashboard</a>
+{% if perms.report.add_report %}
+    <a href="{% url 'report:create_report' %}" class="btn-create">Create Report</a>
+    <a href="{% url 'report:import_report' %}" class="btn-create">Import Report</a>
+{% endif %}
+
+<input type="text" id="searchInput" class="search-box filter-box" placeholder="Search reports...">
+<select id="priorityFilter" class="filter-box">
+    <option value="">All Priorities</option>
+    <option value="HIGH">High</option>
+    <option value="MED-HI">Medium-High</option>
+    <option value="MED">Medium</option>
+    <option value="LOW">Low</option>
+</select>
+<input type="date" id="dateFilter" class="filter-box">
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Asset ID</th>
+        <th>Asset</th>
+        <th>Work Order Number</th>
+        <th>Author</th>
+        <th>Priority</th>
+        <th>Status</th>
+        <th>Entry Date</th>
+        <th>Action</th>
+    </tr>
+    {% for report in reports %}
+    <tr>
+        <td>{{ report.id }}</td>
+        <td>{{ report.asset_id }}</td>
+        <td>{{ report.asset }}</td>
+        <td>{{ report.work_order_number }}</td>
+        <td>{{ report.author.username }}</td>
+        <td>{{ report.priority }}</td>
+        <td>{{ report.status }}</td>
+        <td>{{ report.entry_date|date:"Y-m-d" }}</td>
+        <td>
+            <a href="{% url 'report:view_report' report.id %}">View</a>
+            {% if perms.report.change_report %}
+                <a href="{% url 'report:update_report' report.id %}">Update</a>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
+
+{% block script %}
+<script>
+const searchInput = document.getElementById('searchInput');
+const priorityFilter = document.getElementById('priorityFilter');
+const dateFilter = document.getElementById('dateFilter');
+const rows = document.querySelectorAll('table tr:not(:first-child)');
+
+function filterReports() {
+    let searchText = searchInput.value.toLowerCase();
+    let selectedPriority = priorityFilter.value;
+    let selectedDate = dateFilter.value;
+
+    rows.forEach(row => {
+        let text = row.innerText.toLowerCase();
+        let rowPriority = row.cells[5].innerText;
+        let rowDate = row.cells[7].innerText;
+
+        let matchesSearch = text.includes(searchText);
+        let matchesPriority = !selectedPriority || rowPriority === selectedPriority;
+        let matchesDate = !selectedDate || rowDate === selectedDate;
+
+        row.style.display = (matchesSearch && matchesPriority && matchesDate) ? '' : 'none';
+    });
+}
+
+searchInput.addEventListener('keyup', filterReports);
+priorityFilter.addEventListener('change', filterReports);
+dateFilter.addEventListener('change', filterReports);
+</script>
+{% endblock %}

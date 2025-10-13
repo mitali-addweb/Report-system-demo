@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Client Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/mdi_dashboard.css' %}">
+</head>
+<body>
+    <header>
+        Client Dashboard
+        <form method="post" action="{% url 'logout' %}" style="display:inline; float:right;">
+            {% csrf_token %}
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </header>
+        <div class="container">
+        <h1>Welcome, {{ request.user.username }}</h1>
+
+        <div class="dashboard-card">
+            <p><a href="{% url 'report:display_report' %}"> Reports </a></p>
+        </div>
+    </div>
+</body>
+</html>

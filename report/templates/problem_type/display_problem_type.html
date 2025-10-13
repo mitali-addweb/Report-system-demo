@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Display Problem Type{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/display.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1>Problem Type List</h1>
+<a href="{% url 'dashboard' %}" class="btn-create">Dashboard</a>
+<a href="{% url 'report:create_problem_type' %}" class="btn-create">Create Problem Type</a>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Problem Type</th>
+        <th>Action</th>
+    </tr>
+    {% for problem_type in problem_types %}
+    <tr>
+        <td>{{ problem_type.id }}</td>
+        <td>{{ problem_type.name }}</td> 
+        <td>
+            <a href="{% url 'report:update_problem_type' problem_type.id %}">Update</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

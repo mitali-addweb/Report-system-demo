@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Display Asset{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/display.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h1>Asset List</h1>
+    <a href="{% url 'dashboard' %}" class="btn-create">Dashboard</a>
+    <a href="{% url 'report:create_asset' %}" class="btn-create">Create Asset</a>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Asset</th>
+            <th>Description</th>
+            <th>Priority</th>
+            <th>Action</th>
+        </tr>
+        {% for asset in assets %}
+        <tr>
+            <td>{{ asset.id }}</td>
+            <td>{{ asset }}</td> 
+            <td>{{ asset.description }}</td>
+            <td>{{ asset.priority }}</td>
+            <td>
+                <a href="{% url 'report:view_asset' asset.id %}">View</a> 
+                <a href="{% url 'report:update_asset' asset.id %}">Update</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

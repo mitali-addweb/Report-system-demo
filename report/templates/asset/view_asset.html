@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}View Asset{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/view.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="report-container">
+    <h1>Asset: {{ asset.name }}</h1>
+
+    <div class="field"><strong>Description:</strong> <span>{{ asset.description }}</span></div>
+    <div class="field"><strong>Priority:</strong> <span>{{ asset.priority }}</span></div>
+    {% if asset.parent %}
+        <div class="field previous-entry">
+            <strong>Parent:</strong> 
+            <a href="{% url 'report:view_asset' asset.parent.id %}">{{ asset.parent }}</a>
+        </div>
+    {% endif %}
+
+    <div class="no-print">
+        <a href="{% url 'report:display_assets' %}">Back to Asset List</a>
+    </div>
+</div>
+{% endblock %}

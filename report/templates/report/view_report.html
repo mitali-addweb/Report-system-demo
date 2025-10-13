@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}View Report{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/view.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="report-container">
+    <h1>Report {{ report.id }}</h1>
+
+    <div class="field"><strong>Asset ID:</strong> <span>{{ report.asset_id }}</span></div>
+    <div class="field"><strong>Asset:</strong> <span>{{ report.asset }}</span></div>
+    <div class="field"><strong>Asset Description:</strong> <span>{{ report.asset.description }}</span></div>
+    <div class="field"><strong>Author:</strong> <span>{{ report.author.username }}</span></div>
+    <div class="field"><strong>Entry Date:</strong> <span>{{ report.entry_date }}</span></div>
+    <div class="field"><strong>Priority:</strong> <span>{{ report.priority }}</span></div>
+    <div class="field"><strong>Status:</strong> <span>{{ report.status }}</span></div>
+    <div class="field"><strong>Work Order Number:</strong> <span>{{ report.work_order_number }}</span></div>
+    <div class="field"><strong>Problem Type:</strong> <span>{{ report.problem_type.name }}</span></div>
+    <div class="field"><strong>Problem Description:</strong> <span>{{ report.problem_description }}</span></div>
+    <div class="field"><strong>Recommended Action:</strong> <span>{{ report.recommended_action }}</span></div>
+
+    {% if report.previous_entry %}
+        <div class="previous-entry-section">
+            <h1>Previous Entry: Report {{ report.previous_entry.id }}</h1>
+            <div class="field"><strong>Asset ID:</strong> <span>{{ report.previous_entry.asset_id }}</span></div>
+            <div class="field"><strong>Asset:</strong> <span>{{ report.previous_entry.asset }}</span></div>
+            <div class="field"><strong>Asset Description:</strong> <span>{{ report.previous_entry.asset.description }}</span></div>
+            <div class="field"><strong>Author:</strong> <span>{{ report.previous_entry.author.username }}</span></div>
+            <div class="field"><strong>Entry Date:</strong> <span>{{ report.previous_entry.entry_date }}</span></div>
+            <div class="field"><strong>Priority:</strong> <span>{{ report.previous_entry.priority }}</span></div>
+            <div class="field"><strong>Status:</strong> <span>{{ report.previous_entry.status }}</span></div>
+            <div class="field"><strong>Work Order Number:</strong> <span>{{ report.previous_entry.work_order_number }}</span></div>
+            <div class="field"><strong>Problem Type:</strong> <span>{{ report.previous_entry.problem_type.name }}</span></div>
+            <div class="field"><strong>Problem Description:</strong> <span>{{ report.previous_entry.problem_description }}</span></div>
+            <div class="field"><strong>Recommended Action:</strong> <span>{{ report.previous_entry.recommended_action }}</span></div>
+        </div>
+    {% endif %}
+
+    <div class="no-print">
+        <a href="{% url 'report:display_report' %}">Back to Reports List</a>
+        <button onclick="window.print()">Print Report</button>
+        <a href="{% url 'report:export_report_pdf' report.id %}" class="btn">Export PDF</a>
+        <a href="{% url 'report:export_report_word' report.id %}" class="btn">Export Word</a>
+        <a href="{% url 'report:export_report_csv' report.id %}" class="btn">Export as CSV</a>
+    </div>
+</div>
+{% endblock %}
