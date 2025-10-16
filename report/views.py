@@ -14,6 +14,9 @@ from datetime import datetime
 from .forms import ReportForm, AssetForm, ProblemForm
 from .models import Report, Asset, ProblemType
 from accounts.decorators import allowed_roles_or_permissions
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 # -------------------------
 # Report Views
@@ -247,7 +250,7 @@ def create_asset(request):
 @login_required
 @allowed_roles_or_permissions(roles=['MDI Team'])
 def display_assets(request):
-    assets = Asset.objects.all().order_by('name')
+    assets = Asset.objects.all()
     return render(request, 'asset/display_assets.html', {'assets': assets})
 
 
@@ -312,3 +315,40 @@ def update_problem_type(request, problem_type_id):
         form = ProblemForm(instance=problem_type)
 
     return render(request, 'problem_type/update_problem_type.html', {'form': form, 'problem_type': problem_type})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@csrf_exempt
+def update_asset_parent(request):
+    if request.method == "POST":  
+        try:
+            data = json.loads(request.body)
+            asset_id = data.get("asset_id")
+            parent_id = data.get("parent_id")
+
+            asset = Asset.objects.get(id=asset_id)
+            asset.parent_id = parent_id
+            asset.save()
+
+            return JsonResponse({"success": True})
+        except Asset.DoesNotExist:
+            return JsonResponse({"success": False, "error": "Asset not found"}, status=404)
+        except Exception as e:
+            return JsonResponse({"success": False, "error": str(e)}, status=400)
+    return JsonResponse({"success": False, "error": "Invalid request method"}, status=405)

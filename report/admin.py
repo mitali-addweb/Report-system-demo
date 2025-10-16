@@ -1,7 +1,11 @@
 from django.contrib import admin
-from .models import Report, Asset, ProblemType
+from django_mptt_admin.admin import DjangoMpttAdmin
+from .models import Asset, ProblemType, Report
 
-# Register your models here.
-admin.site.register(Asset)
+@admin.register(Asset)
+class AssetAdmin(DjangoMpttAdmin):
+    mptt_level_indent = 25  
+    list_display = ('name',)
+    
 admin.site.register(ProblemType)
 admin.site.register(Report)

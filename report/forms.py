@@ -1,7 +1,14 @@
 from django import forms
 from .models import Report, Asset, ProblemType
+from mptt.forms import TreeNodeChoiceField
 
 class ReportForm(forms.ModelForm):
+    asset = TreeNodeChoiceField(
+        queryset=Asset.objects.all(),
+        level_indicator='---', 
+        empty_label="---------"
+    )
+
     class Meta:
         model = Report
         fields = [
@@ -15,7 +22,6 @@ class ReportForm(forms.ModelForm):
             'previous_entry',
         ]
         widgets = {
-            'asset': forms.Select(),
             'priority': forms.Select(),
             'work_order_number': forms.TextInput(),
             'problem_type': forms.Select(),

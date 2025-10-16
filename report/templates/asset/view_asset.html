@@ -12,10 +12,16 @@
 
     <div class="field"><strong>Description:</strong> <span>{{ asset.description }}</span></div>
     <div class="field"><strong>Priority:</strong> <span>{{ asset.priority }}</span></div>
-    {% if asset.parent %}
+
+    {% if asset.get_ancestors %}
         <div class="field previous-entry">
-            <strong>Parent:</strong> 
-            <a href="{% url 'report:view_asset' asset.parent.id %}">{{ asset.parent }}</a>
+            <strong>Hierarchy:</strong>
+            {% for ancestor in asset.get_ancestors %}
+                <a href="{% url 'report:view_asset' ancestor.id %}">{{ ancestor.name }}</a>
+                {% if not forloop.last %} → {% endif %}
+            {% endfor %}
+            {% if asset.get_ancestors %} → {% endif %}
+            <span>{{ asset.name }}</span>
         </div>
     {% endif %}
 

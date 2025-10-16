@@ -1,0 +1,66 @@
+/* -------------------- Reset & Base -------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f4f6f8;
+    color: #333;
+}
+
+/* -------------------- Navbar -------------------- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #6c63ff;
+    color: white;
+    padding: 15px 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin-right: 20px;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.navbar a:hover {
+    color: #e0e0ff;
+}
+
+.nav-left .logo {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.nav-right form {
+    display: inline;
+}
+
+.logout-btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    background-color: #fff;
+    color: #6c63ff;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: #e0e0ff;
+}
+
+/* -------------------- Content -------------------- */
+.content {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+}

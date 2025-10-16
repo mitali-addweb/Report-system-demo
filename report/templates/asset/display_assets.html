@@ -1,34 +1,53 @@
 {% extends "base.html" %}
 {% load static %}
+
 {% block title %}Display Asset{% endblock %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/display.css' %}">
+<link rel="stylesheet" href="{% static 'css/display.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jstree@3.3.15/dist/themes/default/style.min.css" />
 {% endblock %}
 
 {% block content %}
-    <h1>Asset List</h1>
-    <a href="{% url 'dashboard' %}" class="btn-create">Dashboard</a>
-    <a href="{% url 'report:create_asset' %}" class="btn-create">Create Asset</a>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Asset</th>
-            <th>Description</th>
-            <th>Priority</th>
-            <th>Action</th>
-        </tr>
-        {% for asset in assets %}
-        <tr>
-            <td>{{ asset.id }}</td>
-            <td>{{ asset }}</td> 
-            <td>{{ asset.description }}</td>
-            <td>{{ asset.priority }}</td>
-            <td>
-                <a href="{% url 'report:view_asset' asset.id %}">View</a> 
-                <a href="{% url 'report:update_asset' asset.id %}">Update</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+<h1>Asset Tree</h1>
+<a href="{% url 'dashboard' %}" class="btn-create">Dashboard</a>
+<a href="{% url 'report:create_asset' %}" class="btn-create">Create Asset</a>
+
+<div id="asset-tree"></div>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jstree@3.3.15/dist/jstree.min.js"></script>
+<script>
+const assets = [
+    {% for asset in assets %}
+    {
+        id: '{{ asset.id }}',
+        parent: '{{ asset.parent.id|default:"#"}}',
+        text: '{{ asset.name }}'
+    },
+    {% endfor %}
+];
+
+$('#asset-tree').jstree({
+    'core': {
+        'check_callback': true,
+        'data': assets
+    },
+    "plugins": ["dnd"]  
+}).on('move_node.jstree', function(e, data) {
+    $.ajax({
+        url: "{% url 'report:update_asset_parent' %}",
+        type: "POST",
+        data: JSON.stringify({
+            asset_id: data.node.id,
+            parent_id: data.parent === "#" ? null : data.parent
+        }),
+        headers: {'X-CSRFToken': '{{ csrf_token }}'},
+        contentType: "application/json",
+        success: function(res){
+            console.log("Parent updated:", res);
+        },
+    });
+});
+</script>
 {% endblock %}

@@ -1,0 +1,89 @@
+/* -------------------- Heading -------------------- */
+h1 {
+    margin-top: 50px;
+    margin-bottom: 20px;
+    font-size: 28px;
+    text-align: center;
+}
+
+  
+.form{
+    padding: 30px 25px;
+}
+/* -------------------- Form -------------------- */
+form {
+    background-color: #fff;
+    max-width: 600px;
+    margin: 0 auto;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* -------------------- Form Fields -------------------- */
+form input, 
+form select, 
+form textarea {
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border 0.3s;
+    width: 100%;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    border-color: #6c63ff;
+}
+
+/* -------------------- Submit Button -------------------- */
+.form button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #6c63ff;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 10px;
+}
+
+.form button:hover {
+    background-color: #574fd6;
+}
+
+/* -------------------- Labels and Paragraphs -------------------- */
+form p {
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #555;
+}
+.btn-create {
+    display: inline-block;
+    margin: 10px 10px 20px 0;
+    padding: 10px 18px;
+    background-color: #6c63ff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: background 0.3s ease;
+}
+
+.btn-create:hover {
+    background-color: #574fd6;
+    color: white;
+}
+/* -------------------- Responsive -------------------- */
+@media (max-width: 768px) {
+    form {
+        padding: 20px 15px;
+    }
+}

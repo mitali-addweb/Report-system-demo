@@ -1,0 +1,85 @@
+/* -------------------- Reset & Base -------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5; /* subtle light grey */
+}
+
+/* -------------------- Login Container -------------------- */
+.login-container {
+    background: #ffffff;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    width: 100%;
+    max-width: 450px;
+    text-align: left;
+}
+
+/* -------------------- Heading -------------------- */
+.login-container h2 {
+    margin-bottom: 25px;
+    color: #333;
+    text-align: center;
+}
+
+/* -------------------- Form Elements -------------------- */
+.login-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-container input {
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border 0.3s;
+    width: 300px;
+}
+
+.login-container input:focus {
+    border-color: #6c63ff;
+}
+
+/* -------------------- Button -------------------- */
+.login-container button {
+    margin-top: 10px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #6c63ff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.login-container button:hover {
+    background: #574fd6;
+}
+
+/* -------------------- Forgot Password Link -------------------- */
+.login-container a {
+    margin-top: 10px;
+    display: inline-block;
+    color: #6c63ff;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.login-container a:hover {
+    color: #574fd6;
+}

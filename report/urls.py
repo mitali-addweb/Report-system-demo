@@ -42,4 +42,7 @@ urlpatterns = [
     path('problem_type/', views.display_problem_type, name='display_problem_type'),
     path('problem_type/update/<int:problem_type_id>/', views.update_problem_type, name='update_problem_type'),
 
+
+    path('assets1/update-parent/', views.update_asset_parent, name='update_asset_parent'),
+
 ]

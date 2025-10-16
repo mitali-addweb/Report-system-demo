@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from mptt.models import MPTTModel, TreeForeignKey
 
-class Asset(models.Model):
+class Asset(MPTTModel):
     PRIORITY_CHOICES = [
         ('HIGH', 'High'),
         ('MED-HI', 'Medium-High'),
@@ -9,26 +10,26 @@ class Asset(models.Model):
         ('LOW', 'Low'),
     ]
 
-    name = models.CharField(max_length=100)  # Name of machine/asset
-    description = models.TextField(blank=True, null=True)  # Asset details
-    parent = models.ForeignKey(
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True, null=True)
+    parent = TreeForeignKey(
         'self',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
         related_name='children'
-    ) 
+    )
     priority = models.CharField(
         max_length=10,
         choices=PRIORITY_CHOICES,
         default='MED'
     )
 
-    def __str__(self):
-        if self.parent:
-            return f"{self.parent} > {self.name}"
-        return self.name
+    class MPTTMeta:
+        order_insertion_by = ['name']
 
+    def __str__(self):
+        return self.name
 
 class ProblemType(models.Model):
     name = models.CharField(max_length=100)
@@ -70,3 +71,5 @@ class Report(models.Model):
 
     def __str__(self):
         return f"Report #{self.id} for {self.asset.name}"
+
+
